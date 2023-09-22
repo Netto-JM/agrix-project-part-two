@@ -29,5 +29,4 @@ public record FarmDto(Long id, String name, Double size) {
     farm.setSize(size);
     return farm;
   }
-
 }

@@ -6,9 +6,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Represents a crop entity.
@@ -55,6 +57,12 @@ public class Crop {
   @JoinColumn(name = "farm_id")
   private Farm farm;
 
+  /**
+   * The fertilizers used in this crop.
+   */
+  @ManyToMany(mappedBy = "crops")
+  private List<Fertilizer> fertilizers;
+
   // Construtores, getters e setters
 
   // Construtor vazio
@@ -77,7 +85,8 @@ public class Crop {
       Double plantedArea,
       LocalDate plantedDate,
       LocalDate harvestDate,
-      Farm farm
+      Farm farm,
+      List<Fertilizer> fertilizers
   ) {
     this.id = id;
     this.name = name;
@@ -85,6 +94,7 @@ public class Crop {
     this.plantedDate = plantedDate;
     this.harvestDate = harvestDate;
     this.farm = farm;
+    this.fertilizers = fertilizers;
   }
 
   /**
@@ -193,5 +203,23 @@ public class Crop {
    */
   public void setFarm(Farm farm) {
     this.farm = farm;
+  }
+
+  /**
+   * Get the fertilizers used in this crop.
+   *
+   * @return The fertilizers used in this crop.
+   */
+  public List<Fertilizer> getFertilizers() {
+    return fertilizers;
+  }
+
+  /**
+   * Set the fertilizers used in this crop.
+   *
+   * @param fertilizers The fertilizers used in this crop.
+   */
+  public void setFertilizers(List<Fertilizer> fertilizers) {
+    this.fertilizers = fertilizers;
   }
 }
