@@ -2,6 +2,8 @@ package com.betrybe.agrix.services;
 
 import com.betrybe.agrix.models.entities.Crop;
 import com.betrybe.agrix.models.repositories.CropRepository;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +40,18 @@ public class CropService {
    */
   public List<Crop> getAllCrops() {
     return cropRepository.findAll();
+  }
+
+  /**
+   * Retrieves a list of Crop entities with harvest dates between specified start and end dates,
+   * inclusively.
+   *
+   * @param start The start date for filtering crops.
+   * @param end   The end date for filtering crops.
+   * @return A List containing Crop entities with harvest dates between start and end dates,
+   *         inclusively.
+   */
+  public List<Crop> getByHarvestDate(LocalDate start, LocalDate end) {
+    return cropRepository.findByHarvestDateBetween(start, end);
   }
 }
