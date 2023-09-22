@@ -1,12 +1,19 @@
 package com.betrybe.agrix.controllers.dto;
 
 import com.betrybe.agrix.models.entities.Crop;
+import java.time.LocalDate;
 
 /**
  * Data Transfer Object (DTO) representing the Crop entity.
  */
-public record CropDto(Long id, String name, Double plantedArea, Long farmId) {
-
+public record CropDto(
+    Long id,
+    String name,
+    Double plantedArea,
+    LocalDate plantedDate,
+    LocalDate harvestDate,
+    Long farmId
+) {
   /**
    * Creates a CropDto from a Crop entity.
    *
@@ -15,7 +22,14 @@ public record CropDto(Long id, String name, Double plantedArea, Long farmId) {
    */
   public static CropDto fromEntity(Crop crop) {
     Long farmId = crop.getFarm() != null ? crop.getFarm().getId() : null;
-    return new CropDto(crop.getId(), crop.getName(), crop.getPlantedArea(), farmId);
+    return new CropDto(
+        crop.getId(),
+        crop.getName(),
+        crop.getPlantedArea(),
+        crop.getPlantedDate(),
+        crop.getHarvestDate(),
+        farmId
+    );
   }
 
   /**
@@ -27,6 +41,8 @@ public record CropDto(Long id, String name, Double plantedArea, Long farmId) {
     Crop crop = new Crop();
     crop.setName(name);
     crop.setPlantedArea(plantedArea);
+    crop.setPlantedDate(plantedDate);
+    crop.setHarvestDate(harvestDate);
     return crop;
   }
 }

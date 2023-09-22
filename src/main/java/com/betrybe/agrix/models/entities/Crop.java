@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 
 /**
  * Represents a crop entity.
@@ -35,6 +36,19 @@ public class Crop {
   private Double plantedArea;
 
   /**
+   * The date when the crop was planted.
+   */
+  @Column(name = "planted_date")
+  private LocalDate plantedDate;
+
+  /**
+   * The date when the crop was or is expected to be harvested.
+   */
+  @Column(name = "harvest_date")
+  private LocalDate harvestDate;
+
+
+  /**
    * The farm to which this crop belongs.
    */
   @ManyToOne
@@ -53,12 +67,23 @@ public class Crop {
    * @param id          The unique identifier of the crop.
    * @param name        The name of the crop.
    * @param plantedArea The planted area of the crop in acres.
+   * @param plantedDate The date when the crop was planted.
+   * @param harvestDate The date when the crop was or is expected to be harvested.
    * @param farm        The farm to which this crop belongs.
    */
-  public Crop(Long id, String name, Double plantedArea, Farm farm) {
+  public Crop(
+      Long id,
+      String name,
+      Double plantedArea,
+      LocalDate plantedDate,
+      LocalDate harvestDate,
+      Farm farm
+  ) {
     this.id = id;
     this.name = name;
     this.plantedArea = plantedArea;
+    this.plantedDate = plantedDate;
+    this.harvestDate = harvestDate;
     this.farm = farm;
   }
 
@@ -114,6 +139,42 @@ public class Crop {
    */
   public void setPlantedArea(Double plantedArea) {
     this.plantedArea = plantedArea;
+  }
+
+  /**
+   * Get the date when the crop was planted.
+   *
+   * @return The date when the crop was planted.
+   */
+  public LocalDate getPlantedDate() {
+    return plantedDate;
+  }
+
+  /**
+   * Set the date when the crop was planted.
+   *
+   * @param plantedDate The date when the crop was planted.
+   */
+  public void setPlantedDate(LocalDate plantedDate) {
+    this.plantedDate = plantedDate;
+  }
+
+  /**
+   * Get the date when the crop was or is expected to be harvested.
+   *
+   * @return The date when the crop was or is expected to be harvested.
+   */
+  public LocalDate getHarvestDate() {
+    return harvestDate;
+  }
+
+  /**
+   * Set the date when the crop was or is expected to be harvested.
+   *
+   * @param harvestDate The date when the crop was or is expected to be harvested.
+   */
+  public void setHarvestDate(LocalDate harvestDate) {
+    this.harvestDate = harvestDate;
   }
 
   /**
