@@ -1,7 +1,9 @@
 package com.betrybe.agrix.models.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -60,7 +62,7 @@ public class Crop {
   /**
    * The fertilizers used in this crop.
    */
-  @ManyToMany(mappedBy = "crops")
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
   private List<Fertilizer> fertilizers;
 
   // Construtores, getters e setters
@@ -78,6 +80,7 @@ public class Crop {
    * @param plantedDate The date when the crop was planted.
    * @param harvestDate The date when the crop was or is expected to be harvested.
    * @param farm        The farm to which this crop belongs.
+   * @param fertilizers The fertilizers used in this crop.
    */
   public Crop(
       Long id,

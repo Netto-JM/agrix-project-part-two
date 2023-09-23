@@ -1,12 +1,17 @@
 package com.betrybe.agrix.services;
 
 import com.betrybe.agrix.models.entities.Crop;
+import com.betrybe.agrix.models.entities.Fertilizer;
 import com.betrybe.agrix.models.repositories.CropRepository;
+import com.betrybe.agrix.models.repositories.FertilizerRepository;
+import com.betrybe.agrix.services.exception.CropNotFoundException;
+import com.betrybe.agrix.services.exception.FertilizerNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service class for managing Crop entities.
@@ -16,9 +21,12 @@ public class CropService {
 
   private final CropRepository cropRepository;
 
+  private final FertilizerRepository fertilizerRepository;
+
   @Autowired
-  public CropService(CropRepository cropRepository) {
+  public CropService(CropRepository cropRepository, FertilizerRepository fertilizerRepository) {
     this.cropRepository = cropRepository;
+    this.fertilizerRepository = fertilizerRepository;
   }
 
   /**
@@ -52,5 +60,26 @@ public class CropService {
    */
   public List<Crop> getByHarvestDate(LocalDate start, LocalDate end) {
     return cropRepository.findByHarvestDateBetween(start, end);
+  }
+
+  /**
+   * Associates a fertilizer with a crop.
+   *
+   * @param cropId       The unique identifier of the crop.
+   * @param fertilizerId The unique identifier of the fertilizer.
+   * @throws CropNotFoundException       If the crop with the specified ID is not found.
+   * @throws FertilizerNotFoundException If the fertilizer with the specified ID is not found.
+   */
+  @Transactional
+  public void addFertilizerToCrop(long cropId, long fertilizerId)
+      throws CropNotFoundException, FertilizerNotFoundException {
+    Crop crop = cropRepository.findById(cropId)
+        .orElseThrow(CropNotFoundException::new);
+    Fertilizer fertilizer = fertilizerRepository.findById(fertilizerId)
+        .orElseThrow(FertilizerNotFoundException::new);
+
+    crop.getFertilizers().add(fertilizer);
+
+    cropRepository.save(crop);
   }
 }

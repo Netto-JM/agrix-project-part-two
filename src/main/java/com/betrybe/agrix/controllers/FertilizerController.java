@@ -1,11 +1,8 @@
 package com.betrybe.agrix.controllers;
 
-import com.betrybe.agrix.controllers.dto.FarmDto;
 import com.betrybe.agrix.controllers.dto.FertilizerDto;
-import com.betrybe.agrix.models.entities.Farm;
 import com.betrybe.agrix.models.entities.Fertilizer;
 import com.betrybe.agrix.services.FertilizerService;
-import com.betrybe.agrix.services.exception.FarmNotFoundException;
 import com.betrybe.agrix.services.exception.FertilizerNotFoundException;
 import java.util.List;
 import java.util.Optional;

@@ -1,6 +1,8 @@
 package com.betrybe.agrix.models.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,7 +43,7 @@ public class Fertilizer {
   /**
    * The crops to which this fertilizer is applied.
    */
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
   @JoinTable(
       name = "crop_fertilizer",
       joinColumns = @JoinColumn(name = "fertilizer_id"),
